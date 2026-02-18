@@ -25,12 +25,12 @@ RUN apt-get -qqy update && apt-get -qqy install  --no-install-recommends \
   libegl-dev \
   && rm -rf /var/lib/apt/lists/* /var/tmp/*
 
-RUN cd / && git clone --depth 1 --branch v5.0.1 https://projects.blender.org/blender/blender.git /blender
-#RUN curl -fsSL -o "/tmp/blender.tar.gz" "https://projects.blender.org/blender/blender/archive/v5.0.1.tar.gz" \
-#  && tar -xf "/tmp/blender.tar.gz" -C "/blender" --strip-components=1 
+RUN curl -fsSL -o "/tmp/blender.tar.gz" "https://projects.blender.org/blender/blender/archive/v5.0.1.tar.gz" \
+  && tar -xf "/tmp/blender.tar.gz" -C "/blender" --strip-components=1 \
+  && rm  "/tmp/blender.tar.gz"
 #Install precompiled libraries
-RUN make update
-# make update will: 
-#  - checkout https://projects.blender.org/blender/lib-linux_x64.git#blender-v5.0-release to lib/linux_x64
+RUN curl -fsSL -o "/tmp/lib-linux_x64.tar.gz" "https://projects.blender.org/blender/lib-linux_x64/archive/blender-v5.0-release.tar.gz" \
+  && tar -xf "/tmp/lib-linux_x64.tar.gz" -C "/blender/lib/linux_x64" --strip-components=1 \
+  && rm "/tmp/lib-linux_x64.tar.gz"
 
 RUN make headless
